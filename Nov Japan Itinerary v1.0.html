@@ -1,0 +1,743 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Nov Japan</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2b0c87ee-4d67-805e-ac2c-e5cca2e2f2e5" class="page sans"><header><h1 class="page-title" dir="auto">Nov Japan</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8035-805d-d210a92b3abb" class="">Trip Overview</h3></div><div style="display:contents" dir="auto"><p id="357c87ee-4d67-80df-a2af-f49d52fcd1bf" class=""><strong>Arrive:</strong> Haneda T3 - 8 November 2026, 00:15AM  </p></div><div style="display:contents" dir="auto"><p id="357c87ee-4d67-8070-ada1-c76286f61cbe" class=""><strong>Depart:</strong> Haneda T3 - 15 November 2026, 01:15AM  </p></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80bd-8510-f0056f94a9a5" class="">Traveling Remarks</h3></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-80bb-9b7e-deb15f3a28be" class="numbered-list" start="1"><li>First usable day - 8 November 2026 (Sunday)  </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-801e-8b12-e9b99e365fdb" class="numbered-list" start="2"><li>Last sightseeing day - 14 November 2026 (Saturday)  </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-8075-8cb8-d69cf8c179a3" class="numbered-list" start="3"><li>Total nights in Japan: 7 checked-in nights, 7 nights in JP ground  </li></ol></div><div style="display:contents" dir="auto"><hr id="357c87ee-4d67-8022-b5d5-f701ea5a411e"/></div><div style="display:contents" dir="auto"><h2 id="357c87ee-4d67-80ec-bdda-f2eecc5abf9b" class="">Itinerary – PLAN A</h2></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8021-9f58-c3f4add942f0" class="">Day 0 - Saturday, 7 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80c1-8506-e1a56168a64b" class="bulleted-list"><li style="list-style-type:disc">Be at KLIA 1 by 9:20AM or earlier for check-in  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8060-9240-e463c27bda7f" class="bulleted-list"><li style="list-style-type:disc">Overnight flight and Manila transit  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-801c-96f2-e3d152e482ea" class="bulleted-list"><li style="list-style-type:disc">Need to choose hotel check-in date as 7 November: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8013-bd37-eb27d2e72f82" class="">Day 1 – Sunday, 8 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80bd-b818-fd24df012958" class="bulleted-list"><li style="list-style-type:disc">00:15AM – Arrive Haneda T3  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80a5-980f-c9d1a11c3bfd" class="bulleted-list"><li style="list-style-type:disc">Easy Sunday  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-809d-98e4-e9845c245ee8" class="bulleted-list"><li style="list-style-type:disc">ChatGPT Recommendations: Asakusa (Senso-ji Temple)/ Sumida River walk/Tokyo Skytree  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80df-8d0d-d1a0dd3d1dd0" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80f1-b9c3-e219bd299111" class="">Day 2 – Monday, 9 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-801d-bfcc-e9aa7939ab9f" class="bulleted-list"><li style="list-style-type:disc">Tokyo DisneySea – go early (rope drop) and stay for night shows if available  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8083-b941-fd45322dc135" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8095-b304-ee3fcb23e45e" class="">Day 3 – Tuesday, 10 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-800f-a44a-f96c6c7e3aff" class="bulleted-list"><li style="list-style-type:disc">Mount Fuji Bike Ride (Day Trip) - Kawaguchiko / Fuji Five Lakes  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8011-b8db-c7cd12eecf0a" class="bulleted-list"><li style="list-style-type:disc">Early train/bus from Tokyo (~2-2.5 hrs)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80c7-b504-da4dc8e2bce5" class="bulleted-list"><li style="list-style-type:disc">Rent bicycle near Kawaguchiko Station  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80c2-b3b8-d0fa784a9ab1" class="bulleted-list"><li style="list-style-type:disc">Cycle around Lake Kawaguchi, Oishi Park, Chureito Pagoda (short hike + photos)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80d9-bcbf-e989496f8013" class="bulleted-list"><li style="list-style-type:disc">Fuji visibility depends on weather → keep this day flexible if possible  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-804c-aad0-c8925f0fa95c" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8007-91e4-d766a4216e6b" class="">Day 4 – Wednesday, 11 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-805c-8c79-f7d93a8388c3" class="bulleted-list"><li style="list-style-type:disc">Morning: Shibuya/Harajuku/Meiji Shrine  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8020-b9f0-d7fddd249560" class="bulleted-list"><li style="list-style-type:disc">Late afternoon/early evening: Shibuya or Akihabara for Street Go-Kart (Mario Kart) OR more shopping  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-806c-8cd6-f4a067b47f87" class="bulleted-list"><li style="list-style-type:disc">Evening/night: Shinjuku (Kabukicho, Omoide Yokocho)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8055-a786-ced4ffa541f2" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8084-bd17-f9036126d9d0" class="">Day 5 – Thursday, 12 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-808a-8215-f9b3083bcde3" class="bulleted-list"><li style="list-style-type:disc">Shinkansen to Osaka (~2.5 hrs) – try to catch morning train  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80d8-8412-f9399ec6c9b9" class="bulleted-list"><li style="list-style-type:disc">Osaka: Dotonburi, Shinsaibashi, Street Food  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80c0-aa05-c8f84e7c7943" class="bulleted-list"><li style="list-style-type:disc">Best time for Glico Man: after sunset (lights + vibes)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-800c-ba71-ed93f47d5f72" class="bulleted-list"><li style="list-style-type:disc">Overnight: Osaka  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-805b-8729-d0f1d9dcca34" class="">Day 6 – Friday, 13 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80b8-9618-c0b8ed84d75c" class="bulleted-list"><li style="list-style-type:disc">USJ – full day &amp; arrive early  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-808e-b803-c0cf329c5ea3" class="bulleted-list"><li style="list-style-type:disc">Overnight: Osaka  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8009-bfc3-d49498b48c90" class="">Day 7 – Saturday, 14 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8030-9b4c-f27aeda7694a" class="bulleted-list"><li style="list-style-type:disc">Shinkansen to Tokyo  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8006-aec1-cb663b85ecad" class="bulleted-list"><li style="list-style-type:disc">Luggage storage  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-807e-ba3b-d01d46987ec0" class="bulleted-list"><li style="list-style-type:disc">Tokyo last day – Ginza/Shibuya shopping  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-805d-a162-c5e5bc5fe74f" class="bulleted-list"><li style="list-style-type:disc">Arrive at Haneda T3 for departure by 10PM  </li></ul></div><div style="display:contents" dir="auto"><hr id="357c87ee-4d67-8096-bf1b-da1c89299d2d"/></div><div style="display:contents" dir="auto"><h2 id="357c87ee-4d67-80b4-be66-e616c657a23a" class="">Accommodation</h2></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80c1-965d-f46dbc20abff" class="">Tokyo (7th to 12th Nov) - 5 nights</h3></div><div style="display:contents" dir="auto"><p id="357c87ee-4d67-8032-a348-e3e35e0b1e79" class=""><strong>Suggestion:</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-809d-813f-f405a39f98c8" class="numbered-list" start="1"><li>Oku Apartment: <a href="https://www.booking.com/Share-Fq8BnK">https://www.booking.com/Share-Fq8BnK</a> (5 mins walk to Oku station, 12 mins to Tokyo station via train)  </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-807f-be67-ee980eaf5a94" class="numbered-list" start="2"><li>アスピア301-306 7 minutes from Nishi-Sugamo Station, near Takino River Hachiman Shrine <a href="https://www.booking.com/Share-O3BkW5R">https://www.booking.com/Share-O3BkW5R</a>  </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-8002-895f-c53c99fbe18f" class="numbered-list" start="3"><li>Kohoku Apartment <a href="https://www.booking.com/Share-AX6KgF">https://www.booking.com/Share-AX6KgF</a>  </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-806f-baff-f8a6359d2276" class="numbered-list" start="4"><li>Stay as Local mizue <a href="https://www.booking.com/Share-9Wl7E0">https://www.booking.com/Share-9Wl7E0</a>  </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-807d-994e-d2b79808d29b" class="numbered-list" start="5"><li>Asakusa 天空树近在咫尺! 浅草秋叶原圈内! 最近地铁步行3分钟! Near Skytree Asakusa!station 3 mins walk !干湿分离! 智能马桶! 高速无限制网路! 3LDK!  </li></ol></div><div style="display:contents" dir="auto"><p id="357c87ee-4d67-8049-8bc6-e9f22313813b" class=""><strong>Cost notes:</strong></p></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8071-a0ce-fb3b084acd91" class="bulleted-list"><li style="list-style-type:disc">Skytree, Tokyo (updated prices 2026) RM2947.77/6 = 491.30  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80fb-80dd-ec6b35879037" class="bulleted-list"><li style="list-style-type:disc">アスピア301-306 7 minutes from Nishi-Sugamo Station, near Takino River Hachiman Shrine, Tokyo (updated prices 2026) RM2432.59/6 = 405.43  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80f4-b6d1-dda1a7dc3f30" class="">Osaka (12th to 14th Nov) - 2 nights</h3></div><div style="display:contents" dir="auto"><p id="357c87ee-4d67-80ae-9d12-f26cc97bd0f5" class=""><strong>Suggestion:</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-8038-99fa-dc8793843217" class="numbered-list" start="1"><li>NTH Namba: <a href="https://www.booking.com/Share-QFuFO8">https://www.booking.com/Share-QFuFO8</a> (very near to Ebisucho station, 33 mins to USJ via train) = RM1105.71/6 = RM184.29  </li></ol></div><div style="display:contents" dir="auto"><hr id="357c87ee-4d67-8008-8212-df196cd5f839"/></div><div style="display:contents" dir="auto"><h2 id="357c87ee-4d67-80fd-8ffb-ed7fb217bdbc" class="">Transportation</h2></div><div style="display:contents" dir="auto"><ol type="1" id="357c87ee-4d67-8047-8e46-f29d9268fc56" class="numbered-list" start="1"><li>JR Pass for Whole Japan <a href="https://s.klook.com/c/B3GGLKMY3n">https://s.klook.com/c/B3GGLKMY3n</a>  </li></ol></div><div style="display:contents" dir="auto"><hr id="357c87ee-4d67-80d1-8d66-c875b1b22160"/></div><div style="display:contents" dir="auto"><h2 id="357c87ee-4d67-80de-aa88-e737b59c8317" class="">Itinerary – PLAN B</h2></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8020-81e7-d95927c0ce78" class="">Day 0 - Saturday, 7 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8050-8027-d6279afd3428" class="bulleted-list"><li style="list-style-type:disc">Be at KLIA 1 by 9:20AM or earlier for check-in  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-808f-b8ac-d94b22573602" class="bulleted-list"><li style="list-style-type:disc">Overnight flight and Manila transit  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-808a-a28e-e5f5ab137c69" class="bulleted-list"><li style="list-style-type:disc">Need to choose hotel check-in date as 7 November: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-806c-a040-c1a397ccb966" class="">Day 1 – Sunday, 8 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8028-919f-fcec105a29c8" class="bulleted-list"><li style="list-style-type:disc">00:15AM – Arrive Haneda T3  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-804f-b30d-ccce5bc679ae" class="bulleted-list"><li style="list-style-type:disc">Easy Sunday  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8075-ad4e-f1b14c7f1c82" class="bulleted-list"><li style="list-style-type:disc">ChatGPT Recommendations: Asakusa (Senso-ji Temple)/ Sumida River walk/Tokyo Skytree  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-800d-aeff-d81f6e8720b4" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80b5-ad32-d02df35580a6" class="">Day 2 – Monday, 9 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8000-afcc-d43f2d346a5e" class="bulleted-list"><li style="list-style-type:disc">Tokyo DisneySea – go early (rope drop) and stay for night shows if available  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8004-9b8f-e6514c3a0e31" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80dc-90ac-d40e5ce9be53" class="">Day 3 – Tuesday, 10 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80b0-9f6f-cebff2193968" class="bulleted-list"><li style="list-style-type:disc">Shinkansen to Osaka (~2/5 hrs) – try to catch morning train  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80da-b944-f36b14e135f4" class="bulleted-list"><li style="list-style-type:disc">Osaka: Dotonburi, Shinsaibashi, Street Food  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8005-8115-d01e39412173" class="bulleted-list"><li style="list-style-type:disc">Best time for Glico Man: after sunset (lights + vibes)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-801f-a8b5-fe2064db9310" class="bulleted-list"><li style="list-style-type:disc">Overnight: Osaka  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8067-b5d9-e2a6fdb3451a" class="">Day 4 – Wednesday, 11 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8035-a20b-d39e549d6eb0" class="bulleted-list"><li style="list-style-type:disc">USJ – full day &amp; arrive early  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8033-a622-eaede74cff83" class="bulleted-list"><li style="list-style-type:disc">Overnight: Osaka  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-8075-8708-cf675d3314ea" class="">Day 5 – Thursday, 12 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8004-8145-fd14df541c02" class="bulleted-list"><li style="list-style-type:disc">Shinkansen to Tokyo  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8016-af44-dd10bd4d63b1" class="bulleted-list"><li style="list-style-type:disc">Ginza/Shinjuku  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8011-bd38-d2c4989d74aa" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-807f-b0db-d7cb6f9b660e" class="">Day 6 – Friday, 13 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80ae-87bc-c959e1297f48" class="bulleted-list"><li style="list-style-type:disc">Mount Fuji Bike Ride (Day Trip) - Kawaguchiko / Fuji Five Lakes  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8027-b652-cf2dda2e77d5" class="bulleted-list"><li style="list-style-type:disc">Early train/bus from Tokyo (~2-2.5 hrs)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80c0-90ed-f0ee00dccfe5" class="bulleted-list"><li style="list-style-type:disc">Rent bicycle near Kawaguchiko Station  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-809b-855e-da52ffca03e7" class="bulleted-list"><li style="list-style-type:disc">Cycle around Lake Kawaguchi, Oishi Park, Chureito Pagoda (short hike + photos)  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80f3-8728-c5cca6109dee" class="bulleted-list"><li style="list-style-type:disc">Fuji visibility depends on weather → keep this day flexible if possible  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80ef-b589-e05ce7c12389" class="bulleted-list"><li style="list-style-type:disc">Overnight: Tokyo  </li></ul></div><div style="display:contents" dir="auto"><h3 id="357c87ee-4d67-80b0-82cb-f14cd3362b36" class="">Day 7 – Saturday, 14 November 2026</h3></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-801c-ab9b-dd55afc61568" class="bulleted-list"><li style="list-style-type:disc">Morning: Shibuya/Harajuku/Meiji Shrine  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8081-a291-f0218ba1a0f3" class="bulleted-list"><li style="list-style-type:disc">Late afternoon/early evening: Shibuya or Akihabara for Street Go-Kart (Mario Kart) OR more shopping  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80f5-8070-f45cfe5ab352" class="bulleted-list"><li style="list-style-type:disc">Arrive at Haneda T3 for departure by 10PM  </li></ul></div><div style="display:contents" dir="auto"><hr id="357c87ee-4d67-80f5-b74e-e550db600977"/></div><div style="display:contents" dir="auto"><h2 id="357c87ee-4d67-80bf-a1c9-f9b354f61ee2" class="">Things to do:</h2></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80cf-88d1-c49ea10862c4" class="bulleted-list"><li style="list-style-type:disc">Disneysea  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80d5-ae39-f635521b68ea" class="bulleted-list"><li style="list-style-type:disc">USJ  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-805c-83f4-d05aff55aeee" class="bulleted-list"><li style="list-style-type:disc">Cycling near Mt Fuji  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-809e-bd91-d1190af22a15" class="bulleted-list"><li style="list-style-type:disc">Shibuya Sky  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80bf-85c9-efaa16d2255a" class="bulleted-list"><li style="list-style-type:disc">Tokyo tower from below  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8099-bfe5-e36508a8a936" class="bulleted-list"><li style="list-style-type:disc">Mario go kart  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8090-bed7-d527922da7c8" class="bulleted-list"><li style="list-style-type:disc">Onsen  </li></ul></div><div style="display:contents" dir="auto"><h2 id="357c87ee-4d67-802a-af7a-ebd5b08f3ca0" class="">Food/drinks must try:</h2></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8047-8f54-e4006bfb2b75" class="bulleted-list"><li style="list-style-type:disc">Wagyu  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8080-9a72-f5ab9d7b6164" class="bulleted-list"><li style="list-style-type:disc">Ramen  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-807b-b442-c068bfb714fe" class="bulleted-list"><li style="list-style-type:disc">Okonomiyaki  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80e7-ab22-e2ebb944af80" class="bulleted-list"><li style="list-style-type:disc">Yakiniku  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8062-bcbf-d19085647781" class="bulleted-list"><li style="list-style-type:disc">Sushi/sashimi  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-809e-b4d3-d69120332c01" class="bulleted-list"><li style="list-style-type:disc">Seafood buffet?  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8014-a696-f59e71394664" class="bulleted-list"><li style="list-style-type:disc">Tonkatsu/gyukatsu  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-803a-93cd-e9933f277602" class="bulleted-list"><li style="list-style-type:disc">Strawberry  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-806f-8f07-f0e8ce4e200f" class="bulleted-list"><li style="list-style-type:disc">Strawberry mochi  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8083-a4bf-df68dde65351" class="bulleted-list"><li style="list-style-type:disc">Matcha ice cream  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-803f-8eb8-db5044d0f415" class="bulleted-list"><li style="list-style-type:disc">Matcha latte  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80d0-b42a-d881da7bd707" class="bulleted-list"><li style="list-style-type:disc">Japanese pancakes?  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-8025-a96a-f81f6d53850b" class="bulleted-list"><li style="list-style-type:disc">Takoyaki  </li></ul></div><div style="display:contents" dir="auto"><ul id="357c87ee-4d67-80c4-bd74-eed5625e45fe" class="bulleted-list"><li style="list-style-type:disc">Lobster Roll (Luke’s Lobster)</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
