@@ -121,6 +121,35 @@
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
+  /* Mobile responsive overrides */
+  @media (max-width: 600px) {
+    .hero { padding: 20px 16px 16px; }
+    .hero h1 { font-size: 1.35rem; }
+    .hero::before { font-size: 50px; opacity: 0.1; }
+    .countdown-bar { padding: 10px 14px; gap: 10px; }
+    .cd-value { font-size: 1.2rem; }
+    .cd-unit { padding: 5px 10px; min-width: 52px; }
+    .tab-btn { padding: 11px 14px; font-size: 0.82rem; }
+    .container { padding: 16px 12px; }
+    .card { padding: 14px; }
+    .member-row { flex-wrap: wrap; gap: 8px; }
+    .progress-wrap { flex: 1 1 100%; order: 3; }
+    .amount-col { min-width: 70px; }
+    .flight-card { padding: 14px; }
+    .flight-city .code { font-size: 1.1rem; }
+    .day-header { flex-wrap: wrap; gap: 6px; }
+    .day-loc { order: 3; }
+    .settlement-table { font-size: 0.78rem; }
+    .settlement-table th, .settlement-table td { padding: 8px 8px; }
+    .stat-box .value { font-size: 1.3rem; }
+    .return-box { padding: 10px 12px; }
+    .return-item { font-size: 0.8rem; }
+    .route-node { font-size: 0.75rem; padding: 3px 9px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-badges { gap: 6px; }
+    .badge { font-size: 0.72rem; padding: 3px 9px; }
+  }
+
   /* STAT BOXES */
   .stat-box {
     background: var(--card);
@@ -610,6 +639,56 @@
     border-top: 1px solid var(--border);
     margin-top: 20px;
   }
+
+  /* COUNTDOWN */
+  .countdown-bar {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .countdown-label {
+    font-size: 0.78rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+  }
+  .countdown-units {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cd-unit {
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 6px 14px;
+    min-width: 62px;
+  }
+  .cd-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .cd-label {
+    font-size: 0.65rem;
+    opacity: 0.65;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+  .cd-departed {
+    font-size: 1rem;
+    font-weight: 700;
+    opacity: 0.9;
+  }
 </style>
 </head>
 <body>
@@ -620,8 +699,20 @@
   <div class="hero-badges">
     <span class="badge green">✅ Flights Booked</span>
     <span class="badge green">✅ Tokyo Hotel Booked</span>
+    <span class="badge green">✅ Shinkansen Decided</span>
     <span class="badge orange">⚠️ Osaka Hotel Pending</span>
-    <span class="badge red">❌ DisneySea / USJ / ANA Flights</span>
+    <span class="badge red">❌ Shinkansen Tickets / DisneySea / USJ</span>
+  </div>
+
+  <div class="countdown-bar">
+    <span class="countdown-label">✈️ Departure in</span>
+    <div class="countdown-units" id="countdown-units">
+      <div class="cd-unit"><div class="cd-value" id="cd-days">--</div><div class="cd-label">Days</div></div>
+      <div class="cd-unit"><div class="cd-value" id="cd-hours">--</div><div class="cd-label">Hours</div></div>
+      <div class="cd-unit"><div class="cd-value" id="cd-mins">--</div><div class="cd-label">Mins</div></div>
+      <div class="cd-unit"><div class="cd-value" id="cd-secs">--</div><div class="cd-label">Secs</div></div>
+    </div>
+    <span style="opacity:0.55; font-size:0.78rem;">to KLIA 1 check-in · 7 Nov 2026, 9:20AM</span>
   </div>
 </div>
 
@@ -764,12 +855,14 @@
     <div class="card-title">🚆 Transport Quick Reference</div>
     <div class="grid-2" style="margin-bottom:12px;">
       <div style="background:#f8f9fa; border-radius:10px; padding:14px;">
-        <div style="font-weight:700; margin-bottom:6px; font-size:0.9rem;">✈️ ANA Domestic Flights <span class="status-pill pill-red" style="font-size:0.68rem; margin-left:4px;">❌ Not Yet Booked</span></div>
+        <div style="font-weight:700; margin-bottom:6px; font-size:0.9rem;">🚄 Shinkansen (Tokyo ↔ Osaka) <span class="status-pill pill-red" style="font-size:0.68rem; margin-left:4px;">❌ Not Yet Booked</span></div>
         <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.6;">
-          <strong>Day 5 (12 Nov):</strong> NH3821 · HND T1 → KIX T1 · Departs 08:45, Arrives 10:15 · ~¥10,000/pax<br>
-          <strong>Day 7 (14 Nov):</strong> NH096 · KIX → HND · ~¥10,000/pax<br>
-          ✅ Cheaper than Shinkansen; HND arrival on Day 7 = same airport as PR423 departure
+          <strong>Day 5 (12 Nov):</strong> Shinagawa → Shin-Osaka · ~2.5 hrs · Hikari/Kodama<br>
+          <strong>Day 7 (14 Nov):</strong> Shin-Osaka → Shinagawa · then shopping → Haneda T3<br>
+          <strong>Est. cost:</strong> ~¥30,625/pax &nbsp;|&nbsp; vs flights ~¥25,920 (diff ~RM 117/pax)<br>
+          <strong>Why:</strong> No airport transfers, fits Day 7 last-day shopping plan perfectly
         </div>
+        <div style="margin-top:8px; background:#f0fdf4; border-left:3px solid #22c55e; border-radius:0 6px 6px 0; padding:6px 10px; font-size:0.78rem; color:#15803d;">✅ Decision confirmed · JR Pass NOT worth it (only needed for 3+ cities)</div>
       </div>
       <div style="background:#f8f9fa; border-radius:10px; padding:14px;">
         <div style="font-weight:700; margin-bottom:6px; font-size:0.9rem;">💳 Suica IC Cards (No JR Pass)</div>
@@ -1026,7 +1119,7 @@
     <div class="day-header" onclick="toggleDay(this)">
       <span class="day-num">Day 5</span>
       <div>
-        <div class="day-title">Travel to Osaka ✈️</div>
+        <div class="day-title">Travel to Osaka 🚄</div>
         <div class="day-date">Thursday, 12 November 2026</div>
       </div>
       <span class="day-loc">🗼→🏙️ Tokyo → Osaka</span>
@@ -1034,7 +1127,7 @@
     </div>
     <div class="day-body">
       <ul>
-        <li><span class="activity-tag tag-transport">Transport</span> <strong>ANA NH3821</strong> HND T1 → KIX T1 · Departs 08:45, Arrives 10:15 · ~¥10,000/pax</li>
+        <li><span class="activity-tag tag-transport">Transport</span> <strong>Shinkansen</strong> Shinagawa → Shin-Osaka · ~2.5 hrs · Hikari/Kodama · ~¥14,720/pax</li>
         <li>Check in to Osaka accommodation</li>
         <li><span class="activity-tag tag-food">Food</span> <strong>Dotonbori</strong> — street food, takoyaki, okonomiyaki</li>
         <li><span class="activity-tag tag-shopping">Shopping</span> <strong>Shinsaibashi</strong> shopping arcade</li>
@@ -1042,24 +1135,24 @@
       </ul>
       <div class="halal-note">🕌 Halal: Dotonbori has certified halal takoyaki stalls and several Muslim-friendly restaurants near Namba.</div>
 
-      <div class="route-section-label">✈️ Hotel → Osaka via ANA Flight <span class="status-pill pill-red" style="font-size:0.68rem; margin-left:4px;">❌ Not Yet Booked</span></div>
+      <div class="route-section-label">🚄 Hotel → Osaka via Shinkansen <span class="status-pill pill-red" style="font-size:0.68rem; margin-left:4px;">❌ Not Yet Booked</span></div>
       <div class="route-seg">
-        <span class="route-node">OKU Hotel → Haneda T1</span>
+        <span class="route-node">OKU Hotel</span>
         <span class="route-arrow">→</span>
-        <span class="route-node">HND T1</span>
-        <span class="route-line-label">Keikyu/Monorail to Haneda · allow 1hr before departure · ⚠️ Note: ANA departs from T1 (not T3)</span>
+        <span class="route-node">Shinagawa Stn</span>
+        <span class="route-line-label">JR Yamanote Line · 1 stop from Tokyo Stn · ~3 min · less crowded platform than Tokyo Stn</span>
       </div>
       <div class="route-seg">
-        <span class="route-node">HND T1</span>
+        <span class="route-node">Shinagawa Stn</span>
         <span class="route-arrow">→</span>
-        <span class="route-node">KIX T1</span>
-        <span class="route-line-label">ANA NH3821 · Departs 08:45, Arrives 10:15 · ~¥10,000/person · ~1hr 30min flight</span>
+        <span class="route-node">Shin-Osaka Stn</span>
+        <span class="route-line-label">Shinkansen Hikari/Kodama · ~2.5 hrs · ~¥14,720/person · reserve seat · aim 8–9AM departure</span>
       </div>
       <div class="route-seg">
-        <span class="route-node">KIX T1</span>
+        <span class="route-node">Shin-Osaka Stn</span>
         <span class="route-arrow">→</span>
         <span class="route-node">Namba Stn</span>
-        <span class="route-line-label">Haruka Express · ~50 min · ¥2,600 · OR Nankai Airport Rapid (cheaper, ~¥930, ~45 min)</span>
+        <span class="route-line-label">Osaka Metro Midosuji Line · ~15 min · ¥290 · use Suica IC card</span>
       </div>
       <div class="route-note">↪ Dotonbori & Shinsaibashi are within 5-min walk of Namba Station</div>
     </div>
@@ -1120,35 +1213,35 @@
     </div>
     <div class="day-body">
       <ul>
-        <li><span class="activity-tag tag-transport">Morning</span> <strong>ANA NH096</strong> KIX → HND — fly back to Tokyo (arrive Haneda, same airport as evening departure)</li>
-        <li>Store luggage at coin lockers at Tokyo Station</li>
+        <li><span class="activity-tag tag-transport">Morning</span> <strong>Shinkansen</strong> Shin-Osaka → Shinagawa — return to Tokyo (~2.5 hrs)</li>
+        <li>Store luggage at coin lockers at <strong>Shinagawa Station</strong> (on the way to Haneda — convenient!). Backup: Tokyo Station if Shinagawa lockers full.</li>
         <li><span class="activity-tag tag-shopping">Shopping</span> <strong>Ginza</strong> or <strong>Shibuya</strong> — last-minute souvenirs & shopping</li>
         <li>⏰ Arrive at <strong>Haneda T3 by 10PM</strong> for final check-in</li>
         <li><strong>PR423</strong> departs ~01:15AM (15 Nov)</li>
       </ul>
       <div class="weather-note">⚠️ Leave Ginza/Shibuya by 19:00 at the latest. Allow buffer for luggage, security, and immigration.</div>
 
-      <div class="route-section-label">✈️ Osaka → Tokyo via ANA Flight <span class="status-pill pill-red" style="font-size:0.68rem; margin-left:4px;">❌ Not Yet Booked</span></div>
+      <div class="route-section-label">🚄 Osaka → Tokyo via Shinkansen <span class="status-pill pill-red" style="font-size:0.68rem; margin-left:4px;">❌ Not Yet Booked</span></div>
       <div class="route-seg">
-        <span class="route-node">Osaka Hotel</span>
+        <span class="route-node">Namba Stn</span>
         <span class="route-arrow">→</span>
-        <span class="route-node">KIX</span>
-        <span class="route-line-label">Nankai Rapid / Haruka Express → KIX · allow 1.5 hrs before flight</span>
+        <span class="route-node">Shin-Osaka Stn</span>
+        <span class="route-line-label">Osaka Metro Midosuji Line · ~15 min · ¥290 · use Suica IC card</span>
       </div>
       <div class="route-seg">
-        <span class="route-node">KIX</span>
+        <span class="route-node">Shin-Osaka Stn</span>
         <span class="route-arrow">→</span>
-        <span class="route-node">HND T2</span>
-        <span class="route-line-label">ANA NH096 · ~¥10,000/person · ~1hr 20min flight · TBC exact times</span>
+        <span class="route-node">Shinagawa Stn</span>
+        <span class="route-line-label">Shinkansen Hikari/Kodama · ~2.5 hrs · ~¥14,720/person · depart 8–9AM</span>
       </div>
-      <div class="route-note">↪ HND arrival is the same airport as PR423 international departure (T3) — no inter-city travel needed on Day 7!</div>
+      <div class="route-note">↪ Shinagawa is perfectly placed — store luggage here, go shopping, then take Keikyu directly to Haneda T3!</div>
 
-      <div class="route-section-label">🛍️ Tokyo Last Stop</div>
+      <div class="route-section-label">🛍️ Tokyo Last Stop — Luggage at Shinagawa</div>
       <div class="route-seg">
-        <span class="route-node">Tokyo Stn</span>
+        <span class="route-node">Shinagawa Stn</span>
         <span class="route-arrow">→</span>
-        <span class="route-node">Coin Lockers (B1/GF)</span>
-        <span class="route-line-label">Store luggage · ¥500–900 per locker · collect before heading to Haneda</span>
+        <span class="route-node">Coin Lockers</span>
+        <span class="route-line-label">✅ Primary: Shinagawa Station lockers · ¥500–900/locker · book in advance if possible. Backup: Tokyo Stn if full.</span>
       </div>
       <div class="route-seg">
         <span class="route-node">Tokyo Stn</span>
@@ -1736,8 +1829,9 @@
       </thead>
       <tbody>
         <tr><td>✈️ Intl Flights (PR)</td><td>TBC (paid)</td><td><span class="status-pill pill-green">✅ Settled</span></td></tr>
-        <tr><td>✈️ ANA NH3821 (12 Nov, HND→KIX)</td><td>~¥10,000</td><td><span class="status-pill pill-red">❌ Not Bought</span></td></tr>
-        <tr><td>✈️ ANA NH096 (14 Nov, KIX→HND)</td><td>~¥10,000</td><td><span class="status-pill pill-red">❌ Not Bought</span></td></tr>
+        <tr><td>🚄 Shinkansen (12 Nov, Shinagawa→Shin-Osaka)</td><td>~¥14,720</td><td><span class="status-pill pill-red">❌ Not Bought</span></td></tr>
+        <tr><td>🚄 Shinkansen (14 Nov, Shin-Osaka→Shinagawa)</td><td>~¥14,720</td><td><span class="status-pill pill-red">❌ Not Bought</span></td></tr>
+        <tr><td>🧳 Shinagawa locker (Day 7)</td><td>~¥500–900</td><td>Estimate</td></tr>
         <tr><td>🏨 Tokyo Hotel</td><td>RM 567.16</td><td><span class="status-pill pill-orange">⚠️ Settling</span></td></tr>
         <tr><td>🏨 Osaka Hotel</td><td>~RM 184.29</td><td><span class="status-pill pill-red">❌ Pending</span></td></tr>
         <tr><td>🎡 DisneySea Ticket</td><td>~¥8,000–10,000</td><td><span class="status-pill pill-red">❌ Not Bought</span></td></tr>
@@ -1769,12 +1863,17 @@
     </div>
     <div class="checklist-item" onclick="toggleCheck(this)">
       <input type="checkbox">
-      <span class="ci-text">Book <strong>ANA NH3821 × 6</strong> (12 Nov, HND T1 → KIX, Departs 08:45)</span>
+      <span class="ci-text">Book <strong>Shinkansen × 6</strong> (12 Nov, Shinagawa → Shin-Osaka, Tokyo → Osaka)</span>
       <span class="ci-priority pri-high">HIGH</span>
     </div>
     <div class="checklist-item" onclick="toggleCheck(this)">
       <input type="checkbox">
-      <span class="ci-text">Book <strong>ANA NH096 × 6</strong> (14 Nov, KIX → HND)</span>
+      <span class="ci-text">Book <strong>Shinkansen × 6</strong> (14 Nov, Shin-Osaka → Shinagawa, Osaka → Tokyo)</span>
+      <span class="ci-priority pri-high">HIGH</span>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <input type="checkbox">
+      <span class="ci-text">Reserve <strong>Shinagawa Station coin lockers</strong> for Day 7 luggage storage (book in advance if possible)</span>
       <span class="ci-priority pri-high">HIGH</span>
     </div>
     <div class="checklist-item" onclick="toggleCheck(this)">
@@ -1963,7 +2062,7 @@
 </div>
 
 <footer>
-  🇯🇵 Nov 2026 Japan Trip Dashboard &nbsp;·&nbsp; Plan A Confirmed &nbsp;·&nbsp; Last updated May 2026 &nbsp;·&nbsp; 6 Pax
+  🇯🇵 Nov 2026 Japan Trip Dashboard &nbsp;·&nbsp; Plan A Confirmed &nbsp;·&nbsp; Shinkansen Decision Confirmed &nbsp;·&nbsp; Last updated May 2026 &nbsp;·&nbsp; 6 Pax
 </footer>
 
 <script>
@@ -2119,6 +2218,29 @@
   // Init
   renderExpenses();
   loadChecklist();
+
+  // Countdown Timer — target: 7 Nov 2026, 9:20AM Malaysia time (UTC+8)
+  const DEPARTURE = new Date('2026-11-07T09:20:00+08:00').getTime();
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = DEPARTURE - now;
+    if (diff <= 0) {
+      document.getElementById('countdown-units').innerHTML = '<span class="cd-departed">🇯🇵 We\'re in Japan!</span>';
+      return;
+    }
+    const days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('cd-days').textContent  = String(days).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2, '0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 </script>
 
 </body>
