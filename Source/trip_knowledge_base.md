@@ -1,6 +1,6 @@
 # 🇯🇵 Nov 2026 Japan Trip — Knowledge Base
 **Trip:** Tokyo & Osaka | 7–15 November 2026
-**Last Updated:** May 2026
+**Last Updated:** May 2026 (Updated: Shinkansen decision)
 
 ---
 
@@ -87,15 +87,36 @@
 ### Inter-City
 | Route | Mode | Est. Duration | Notes |
 |-------|------|---------------|-------|
-| Tokyo → Osaka (Day 5) | ANA NH3821 (HND T1 → KIX) | ~1.5 hrs | Departs 08:45, Arrives 10:15 · ~¥10,000/pax · ❌ Not yet booked |
-| Osaka → Tokyo (Day 7) | ANA NH096 (KIX → HND) | ~1.5 hrs | ~¥10,000/pax · ❌ Not yet booked · HND arrival = same as PR423 departure |
+| Tokyo → Osaka (Day 5) | **Shinkansen** (Shinagawa → Shin-Osaka) | ~2.5 hrs | Morning departure · ✅ Decision confirmed |
+| Osaka → Tokyo (Day 7) | **Shinkansen** (Shin-Osaka → Shinagawa) | ~2.5 hrs | Return for last-day shopping before Haneda T3 departure |
 | Tokyo → Kawaguchiko (Day 3) | Highway Bus | ~2 hrs | Busta Shinjuku → Kawaguchiko · ~¥1,750/pax · book in advance |
 | Haneda T3 → Tokyo Hotel | Taxi/Van | ~40 min | Late arrival (00:15AM) — trains stopped, split 6-way ~¥5,000–8,000 total |
 
-### Transport Decision: Suica + ANA Flights (No JR Pass)
-- **JR Pass:** ❌ Not getting — not cost-effective given ANA flight option
+### Transport Decision: Shinkansen (✅ Confirmed — Flights Dropped)
+
+**Decision:** Use Shinkansen for Tokyo ↔ Osaka instead of ANA domestic flights.
+
+**Reasons:**
+1. **Public transport starts ~05:00** — cannot reach the airport in time for early-morning flights via public transport. Arranging separate airport transfers would be an extra cost.
+2. **Flight schedule too tight and tiring** — the flight options would make our schedule stressful. Shinkansen is more aligned with our itinerary.
+3. **Last-day logistics** — on Day 7 we return to Tokyo for one final round of shopping before departing from Haneda T3. Shinkansen to Shinagawa fits this perfectly.
+
+**Cost Comparison (per person):**
+| Option | Estimated Cost | Notes |
+|--------|---------------|-------|
+| Via flights (public transport) | ¥25,920 | Includes airport transfers via public transport |
+| Via Shinkansen | ¥30,625 | Door-to-door, no airport transfer hassle |
+| **Difference** | **~RM 117.36/pax** | Shinkansen is slightly more expensive but more practical |
+
+**JR Pass:** ❌ Not worth it — only makes sense if travelling across 3+ major cities.
+
+### Luggage Storage — Day 7 Plan
+- **Primary:** Leave luggage at **Shinagawa Station** coin lockers before heading out for last-day shopping. Shinagawa is on the way to Haneda T3 — retrieve luggage after shopping and proceed directly to the airport.
+- **Backup:** **Tokyo Station** lockers if Shinagawa runs out (advance booking may be possible).
+- **Note:** If we had taken flights instead, luggage could have been stored at Haneda T1.
+
+### Suica IC Cards
 - **Suica IC Cards:** Buy at Haneda on arrival · works on all metro, JR local & buses · Tokyo Suica valid in Osaka too
-- **ANA Domestic Flights:** NH3821 (12 Nov HND→KIX) + NH096 (14 Nov KIX→HND) · ~¥20,000/person total · cheapest inter-city option
 
 ### Local Transport (Tokyo / Osaka)
 - IC Card (Suica/PASMO for Tokyo; ICOCA for Osaka) — rechargeable, works on subway, buses, convenience stores
@@ -109,8 +130,8 @@
 |----------|-----|----------|--------|
 | Tokyo DisneySea tickets | Day 2 (9 Nov) | 🔴 High | ❌ Not booked |
 | USJ tickets | Day 6 (13 Nov) | 🔴 High | ❌ Not booked |
-| ANA NH3821 × 6 (HND T1 → KIX) | Day 5 (12 Nov) | 🔴 High | ❌ Not booked |
-| ANA NH096 × 6 (KIX → HND) | Day 7 (14 Nov) | 🔴 High | ❌ Not booked |
+| Shinkansen × 6 (Shinagawa → Shin-Osaka) | Day 5 (12 Nov) | 🔴 High | ❌ Not booked |
+| Shinkansen × 6 (Shin-Osaka → Shinagawa) | Day 7 (14 Nov) | 🔴 High | ❌ Not booked |
 | Kawaguchiko highway bus × 6 (both ways) | Day 3 (10 Nov) | 🟡 Medium | ❌ Not booked |
 | Street Go-Kart (Mario Kart) | Day 4 (11 Nov) | 🟡 Medium | ❌ Not booked |
 | Mt Fuji bike rental (Kawaguchiko) | Day 3 (10 Nov) | 🟡 Medium | ❌ Not booked |
@@ -163,8 +184,9 @@
 
 - [ ] Collect outstanding Tokyo hotel payments (RM 1,101.46 still owed to Sab1)
 - [ ] Book Osaka accommodation (NTH Namba recommended)
-- [ ] Book ANA NH3821 × 6 (12 Nov, HND T1 → KIX, Departs 08:45)
-- [ ] Book ANA NH096 × 6 (14 Nov, KIX → HND)
+- [ ] Book Shinkansen × 6 (12 Nov, Shinagawa → Shin-Osaka, Tokyo → Osaka)
+- [ ] Book Shinkansen × 6 (14 Nov, Shin-Osaka → Shinagawa, Osaka → Tokyo)
+- [ ] Reserve Shinagawa Station coin lockers for Day 7 luggage storage (book in advance)
 - [ ] Book Tokyo DisneySea tickets (book well in advance — popular)
 - [ ] Book USJ tickets
 - [ ] Book highway bus × 6 Busta Shinjuku ↔ Kawaguchiko (Day 3)
@@ -173,7 +195,7 @@
 - [ ] Research halal restaurants in Osaka (Dotonbori, Namba)
 - [ ] Taxi plan confirmed for Haneda 00:15AM arrival
 - [ ] Confirm Mt Fuji bike rental availability (weather contingency plan)
-- [ ] Plan luggage storage on Day 7 at HND between domestic arrival and international departure
+- [ ] Confirm Shinagawa Station locker availability / advance booking for Day 7 luggage storage
 
 ---
 
