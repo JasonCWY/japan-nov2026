@@ -689,6 +689,70 @@
     font-weight: 700;
     opacity: 0.9;
   }
+
+  /* IDENTITY BAR */
+  .identity-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0f4ff;
+    border: 1px solid #d0d9f5;
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+  }
+  .identity-bar label { font-weight: 600; color: var(--secondary); white-space: nowrap; }
+  .identity-bar select {
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background: white;
+    cursor: pointer;
+  }
+  .identity-hint { color: var(--text-muted); font-size: 0.78rem; }
+
+  /* NOTES ON EXPENSE ITEM */
+  .exp-notes {
+    margin-top: 5px;
+    font-size: 0.78rem;
+    color: #555;
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid #cbd5e1;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* EDIT BUTTON */
+  .btn-edit {
+    background: #e8f4fd;
+    color: #1a73e8;
+    border: 1px solid #c5dff8;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .btn-edit:hover { background: #d0e8fa; }
+
+  /* SEEDED BADGE */
+  .seeded-badge {
+    font-size: 0.67rem;
+    background: #fff3cd;
+    color: #856404;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
 </style>
 </head>
 <body>
@@ -1787,7 +1851,7 @@
         <div class="form-group">
           <label>Paid By</label>
           <select id="exp-paidby">
-            <option value="Jason">JasonCWY</option>
+            <option value="JasonCWY">JasonCWY</option>
             <option value="Ray">Ray</option>
             <option value="Sab1">Sab1</option>
             <option value="Sab2">Sab2</option>
@@ -1806,6 +1870,10 @@
             <option value="🛍️ Shopping (shared)">🛍️ Shopping (shared)</option>
             <option value="🧾 Other">🧾 Other</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label>Notes / Remarks (optional)</label>
+          <input type="text" id="exp-notes" placeholder="e.g. paid cash, split 3-way, receipt #...">
         </div>
       </div>
       <button class="btn btn-primary" onclick="addExpense()">+ Add Expense</button>
@@ -2091,7 +2159,28 @@
   document.querySelectorAll('.day-body').forEach(b => b.style.display = 'block');
 
   // Expense Tracker
+  const HOTEL_SEED_ID = 'seeded_hotel_tokyo_oku_2026';
   let expenses = JSON.parse(localStorage.getItem('japan2026_expenses') || '[]');
+
+  function seedExpenses() {
+    if (!expenses.find(e => e.id === HOTEL_SEED_ID)) {
+      expenses.unshift({
+        id: HOTEL_SEED_ID,
+        desc: 'Tokyo Hotel — OKU Apartment (5 nights, 6 pax)',
+        amount: 3402.96,
+        currency: 'RM',
+        paidBy: 'Sab1',
+        cat: '🏨 Accommodation',
+        notes: 'RM 567.16/pax. Outstanding to Sab1: Kai Nin RM 283.58 · Nadia RM 267.16 · Sab2 RM 267.16 · Ray RM 283.56 (total RM 1,101.46 still owed)',
+        seeded: true
+      });
+      localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
+    }
+  }
+
+  function escHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
 
   function addExpense() {
     const desc = document.getElementById('exp-desc').value.trim();
@@ -2099,16 +2188,60 @@
     const currency = document.getElementById('exp-currency').value;
     const paidBy = document.getElementById('exp-paidby').value;
     const cat = document.getElementById('exp-cat').value;
+    const notes = document.getElementById('exp-notes').value.trim();
     if (!desc || isNaN(amount) || amount <= 0) { alert('Please enter a description and a valid amount.'); return; }
-    expenses.push({ desc, amount, currency, paidBy, cat, id: Date.now() });
+    expenses.push({ desc, amount, currency, paidBy, cat, notes, id: String(Date.now()) });
     localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
     document.getElementById('exp-desc').value = '';
     document.getElementById('exp-amount').value = '';
+    document.getElementById('exp-notes').value = '';
     renderExpenses();
   }
 
   function deleteExpense(id) {
-    expenses = expenses.filter(e => e.id !== id);
+    const exp = expenses.find(e => String(e.id) === String(id));
+    if (!exp || exp.seeded) return;
+    expenses = expenses.filter(e => String(e.id) !== String(id));
+    localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
+    renderExpenses();
+  }
+
+  function editExpense(id) {
+    const exp = expenses.find(e => String(e.id) === String(id));
+    if (!exp) return;
+    const item = document.getElementById('exp-item-' + id);
+    if (!item) return;
+    const cats = ['🎡 Theme Park','🍜 Food','🚆 Transport','🏨 Accommodation','🎟️ Activities','🛍️ Shopping (shared)','🧾 Other'];
+    const catOpts = cats.map(c => `<option value="${c}" ${exp.cat===c?'selected':''}>${c}</option>`).join('');
+    item.innerHTML = `
+      <div style="width:100%;display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input id="edit-desc-${id}" value="${escHtml(exp.desc)}" placeholder="Description" style="flex:2;min-width:140px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;font-family:inherit;">
+          <select id="edit-currency-${id}" style="width:70px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.83rem;">
+            <option value="RM" ${exp.currency==='RM'?'selected':''}>RM</option>
+            <option value="¥" ${exp.currency==='¥'?'selected':''}>¥ Yen</option>
+          </select>
+          <input id="edit-amount-${id}" type="number" value="${exp.amount}" step="0.01" style="width:96px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.85rem;">
+          <select id="edit-cat-${id}" style="flex:1;min-width:130px;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.83rem;">${catOpts}</select>
+        </div>
+        <input id="edit-notes-${id}" type="text" value="${escHtml(exp.notes||'')}" placeholder="Notes / remarks (optional)" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.83rem;font-family:inherit;">
+        <div style="display:flex;gap:8px;justify-content:flex-end;">
+          <button class="btn btn-outline" onclick="renderExpenses()" style="font-size:0.82rem;padding:5px 12px;">Cancel</button>
+          <button class="btn btn-primary" onclick="saveExpenseEdit('${id}')" style="font-size:0.82rem;padding:5px 12px;">💾 Save</button>
+        </div>
+      </div>`;
+  }
+
+  function saveExpenseEdit(id) {
+    const exp = expenses.find(e => String(e.id) === String(id));
+    if (!exp) return;
+    const desc = document.getElementById('edit-desc-' + id).value.trim();
+    const amount = parseFloat(document.getElementById('edit-amount-' + id).value);
+    const currency = document.getElementById('edit-currency-' + id).value;
+    const cat = document.getElementById('edit-cat-' + id).value;
+    const notes = document.getElementById('edit-notes-' + id).value.trim();
+    if (!desc || isNaN(amount) || amount <= 0) { alert('Please enter a valid description and amount.'); return; }
+    exp.desc = desc; exp.amount = amount; exp.currency = currency; exp.cat = cat; exp.notes = notes;
     localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
     renderExpenses();
   }
@@ -2126,59 +2259,50 @@
   function renderExpenses() {
     const list = document.getElementById('expense-list');
     const totalArea = document.getElementById('expense-total-area');
+    if (!list) return;
     if (expenses.length === 0) {
-      list.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:20px; font-size:0.85rem;">No expenses recorded yet. Add your first shared expense above.</p>';
-      totalArea.innerHTML = '';
+      list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;font-size:0.85rem;">No expenses recorded yet. Add your first shared expense above.</p>';
+      if (totalArea) totalArea.innerHTML = '';
       return;
     }
-
     let totalRM = 0, totalYen = 0;
     let html = '';
     expenses.forEach(e => {
-      const cur = e.currency || 'RM'; // backwards-compat for old entries
+      const cur = e.currency || 'RM';
       if (cur === '¥') totalYen += e.amount; else totalRM += e.amount;
       const curTag = cur === '¥'
         ? `<span style="background:#fff3cd;color:#856404;padding:1px 6px;border-radius:6px;font-size:0.7rem;font-weight:700;">¥ JPY</span>`
         : `<span style="background:#d4edda;color:#155724;padding:1px 6px;border-radius:6px;font-size:0.7rem;font-weight:700;">RM MYR</span>`;
-      html += `<div class="expense-item">
+      const seededBadge = e.seeded ? `<span class="seeded-badge">Pre-loaded</span>` : '';
+      const notesHtml = e.notes ? `<div class="exp-notes">📝 ${escHtml(e.notes)}</div>` : '';
+      const editBtn = `<button class="btn-edit" onclick="editExpense('${e.id}')" title="Edit this expense">✏️</button>`;
+      const delBtn = !e.seeded ? `<button class="btn btn-danger" onclick="deleteExpense('${e.id}')">✕</button>` : '';
+      html += `<div class="expense-item" id="exp-item-${e.id}">
         <div class="expense-icon">${e.cat.split(' ')[0]}</div>
         <div class="expense-desc">
-          <div class="title">${e.desc} ${curTag}</div>
-          <div class="meta">Paid by <strong>${e.paidBy}</strong> · ${e.cat} · ${fmtPer(cur, e.amount)}</div>
+          <div class="title">${escHtml(e.desc)} ${curTag}${seededBadge}</div>
+          <div class="meta">Paid by <strong>${escHtml(e.paidBy)}</strong> · ${escHtml(e.cat)} · ${fmtPer(cur, e.amount)}</div>
+          ${notesHtml}
         </div>
         <div class="expense-amount">${fmtAmt(cur, e.amount)}</div>
-        <button class="btn btn-danger" onclick="deleteExpense(${e.id})">✕</button>
+        ${editBtn}${delBtn}
       </div>`;
     });
     list.innerHTML = html;
-
-    // Build totals — show RM and/or Yen separately
     let totalsHtml = '';
     if (totalRM > 0) {
       totalsHtml += `<div class="expense-total-row" style="margin-bottom:6px;">
-        <div>
-          <div class="label">Total (MYR)</div>
-          <div style="font-size:0.75rem;opacity:0.6;">Per person share</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="value">RM ${totalRM.toFixed(2)}</div>
-          <div style="font-size:0.8rem;opacity:0.7;">RM ${(totalRM/6).toFixed(2)} each</div>
-        </div>
+        <div><div class="label">Total (MYR)</div><div style="font-size:0.75rem;opacity:0.6;">Per person share</div></div>
+        <div style="text-align:right;"><div class="value">RM ${totalRM.toFixed(2)}</div><div style="font-size:0.8rem;opacity:0.7;">RM ${(totalRM/6).toFixed(2)} each</div></div>
       </div>`;
     }
     if (totalYen > 0) {
       totalsHtml += `<div class="expense-total-row" style="background:linear-gradient(135deg,#b45309,#92400e);">
-        <div>
-          <div class="label">Total (JPY)</div>
-          <div style="font-size:0.75rem;opacity:0.6;">Per person share</div>
-        </div>
-        <div style="text-align:right;">
-          <div class="value">¥${Math.round(totalYen).toLocaleString()}</div>
-          <div style="font-size:0.8rem;opacity:0.7;">¥${Math.round(totalYen/6).toLocaleString()} each</div>
-        </div>
+        <div><div class="label">Total (JPY)</div><div style="font-size:0.75rem;opacity:0.6;">Per person share</div></div>
+        <div style="text-align:right;"><div class="value">¥${Math.round(totalYen).toLocaleString()}</div><div style="font-size:0.8rem;opacity:0.7;">¥${Math.round(totalYen/6).toLocaleString()} each</div></div>
       </div>`;
     }
-    totalArea.innerHTML = totalsHtml;
+    if (totalArea) totalArea.innerHTML = totalsHtml;
   }
 
   // Checklist persistence
@@ -2216,6 +2340,7 @@
   }
 
   // Init
+  seedExpenses();
   renderExpenses();
   loadChecklist();
 
