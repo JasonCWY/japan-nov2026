@@ -14,6 +14,35 @@ Responsibilities:
 
 Act proactively like an experienced travel planner, financial coordinator, and group travel organizer.
 
+## Project Structure
+Single-file web app — no build system.
+
+| File | Purpose |
+|------|---------|
+| `index.html` | Entire app: itinerary, expense tracker, checklist (vanilla HTML/CSS/JS) |
+| `POSTGRES_LEARNING.md` | PostgreSQL + Supabase learning context and connection notes |
+
+**Current data layer:** `localStorage` (key: `japan2026_expenses`) — being migrated to Supabase.  
+**To view the app:** open `index.html` directly in a browser.
+
+## Group Members
+6 participants, expenses split equally (÷6). Currencies: RM (MYR) and ¥ (JPY).
+
+| Name | Gender | Muslim | Notes |
+|------|--------|--------|-------|
+| JasonCWY | M | No | |
+| Ray | M | No | |
+| Sab1 | F | Yes | Paid Tokyo & Osaka hotels upfront |
+| Sab2 | F | Yes | Owes Sab1 for Tokyo + Osaka hotel |
+| Nadia | F | Yes | |
+| Kai Nin | F | No | Owes Sab1 partial Tokyo hotel share |
+
+## Expense Tracker
+- Categories: Accommodation, Food, Transport, Theme Park, Activities, Shopping (shared), Other
+- Paid-by tracked per expense; settlement status tracked per person per expense
+- Pre-loaded (seeded) expenses cannot be deleted — only user-added ones can
+- **Supabase migration in progress** — see `POSTGRES_LEARNING.md` for schema and connection details
+
 ## Language
 Any file output should be in both **Chinese and English** (primarily English).
 
