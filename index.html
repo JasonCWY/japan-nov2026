@@ -754,6 +754,11 @@
     vertical-align: middle;
   }
 </style>
+
+<!-- Supabase JS client (CDN) — must load before config.js and our script -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Project credentials — gitignored, never committed -->
+<script src="config.js"></script>
 </head>
 <body>
 
@@ -1956,7 +1961,8 @@
   <div class="card">
     <div class="card-title">📊 Group Expense Tracker (In-Trip)</div>
     <div class="info-box blue">Track shared expenses during the trip. Enter who paid and split evenly or custom.</div>
-    <div class="info-box yellow"><span>⚠️ <strong>Heads up:</strong> Expenses are saved locally in your browser only. They are <strong>not synced</strong> with other people's devices — each person sees their own local copy.</span></div>
+    <div class="info-box blue"><span>☁️ <strong>Cloud synced:</strong> Expenses are shared across all devices — everyone sees the same data.</span></div>
+    <div class="info-box yellow"><span>⚠️ <strong>No real-time sync yet:</strong> Changes made by others won't appear automatically. <strong>Refresh the page</strong> to get the latest expenses.</span></div>
 
     <div class="expense-form">
       <div class="form-row">
@@ -2265,6 +2271,10 @@
 </footer>
 
 <script>
+  // ── Supabase client ────────────────────────────────────────────────────────
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // ──────────────────────────────────────────────────────────────────────────
+
   // Tab switching
   function showTab(name) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -2289,66 +2299,115 @@
   // Open all day bodies by default
   document.querySelectorAll('.day-body').forEach(b => b.style.display = 'block');
 
-  // Expense Tracker
-  const HOTEL_SEED_ID = 'seeded_hotel_tokyo_oku_2026';
-  const OSAKA_HOTEL_SEED_ID = 'seeded_hotel_osaka_2026';
-  let expenses = JSON.parse(localStorage.getItem('japan2026_expenses') || '[]');
+  // Expense Tracker — Supabase-backed
+  let expenses = [];
 
-  function seedExpenses() {
-    if (!expenses.find(e => e.id === HOTEL_SEED_ID)) {
-      expenses.unshift({
-        id: HOTEL_SEED_ID,
-        desc: 'Tokyo Hotel — OKU Apartment (5 nights, 6 pax)',
-        amount: 3402.96,
-        currency: 'RM',
-        paidBy: 'Sab1',
-        cat: '🏨 Accommodation',
-        notes: 'RM 567.16/pax. Outstanding to Sab1: Kai Nin RM 283.58 · Sab2 RM 267.16 (total RM 550.74 still owed)',
-        seeded: true
-      });
-      localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
-    }
-    if (!expenses.find(e => e.id === OSAKA_HOTEL_SEED_ID)) {
-      expenses.push({
-        id: OSAKA_HOTEL_SEED_ID,
-        desc: 'Osaka Hotel (6 pax)',
-        amount: 1116.79,
-        currency: 'RM',
-        paidBy: 'Sab1',
-        cat: '🏨 Accommodation',
-        notes: 'RM 186.13/pax. Outstanding to Sab1: Sab2 RM 186.13 (total RM 186.13 still owed)',
-        seeded: true
-      });
-      localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
-    }
+  // Lookup maps populated once on init
+  let participantNameToId = {};  // "Sab1"  → UUID
+  let participantIdToName = {};  // UUID    → "Sab1"
+  let categoryDisplayToId = {};  // "🏨 Accommodation" → 1
+  let categoryIdToDisplay = {};  // 1 → "🏨 Accommodation"
+
+  // DB stores "JPY"; UI uses "¥" — convert at the boundary
+  function currencyToDb(c)   { return c === '¥' ? 'JPY' : c; }
+  function currencyFromDb(c) { return c === 'JPY' ? '¥' : c; }
+
+  // Map a Supabase row to the shape the UI expects
+  function dbRowToExpense(row) {
+    return {
+      id:       row.id,
+      desc:     row.description,
+      amount:   parseFloat(row.amount),
+      currency: currencyFromDb(row.currency),
+      paidBy:   participantIdToName[row.paid_by_id] || row.paid_by_id,
+      cat:      categoryIdToDisplay[row.category_id] || '',
+      notes:    row.notes || '',
+      seeded:   row.is_seeded || false
+    };
+  }
+
+  // Load participants + categories into maps (run once before any expense query)
+  async function loadLookups() {
+    const [{ data: parts }, { data: cats }] = await Promise.all([
+      db.from('participants').select('id, name'),
+      db.from('categories').select('id, icon, name')
+    ]);
+    parts.forEach(p => {
+      participantNameToId[p.name] = p.id;
+      participantIdToName[p.id]   = p.name;
+    });
+    cats.forEach(c => {
+      const display = `${c.icon.trim()} ${c.name}`;
+      categoryDisplayToId[display] = c.id;
+      categoryIdToDisplay[c.id]    = display;
+    });
+  }
+
+  // Fetch all expenses from Supabase, update local cache, re-render
+  async function loadExpenses() {
+    const { data, error } = await db
+      .from('expenses')
+      .select('*')
+      .order('created_at', { ascending: true });
+    if (error) { console.error('Failed to load expenses:', error.message); return; }
+    expenses = data.map(dbRowToExpense);
+    renderExpenses();
   }
 
   function escHtml(str) {
     return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function addExpense() {
-    const desc = document.getElementById('exp-desc').value.trim();
-    const amount = parseFloat(document.getElementById('exp-amount').value);
+  async function addExpense() {
+    const desc     = document.getElementById('exp-desc').value.trim();
+    const amount   = parseFloat(document.getElementById('exp-amount').value);
     const currency = document.getElementById('exp-currency').value;
-    const paidBy = document.getElementById('exp-paidby').value;
-    const cat = document.getElementById('exp-cat').value;
-    const notes = document.getElementById('exp-notes').value.trim();
+    const paidBy   = document.getElementById('exp-paidby').value;
+    const cat      = document.getElementById('exp-cat').value;
+    const notes    = document.getElementById('exp-notes').value.trim();
     if (!desc || isNaN(amount) || amount <= 0) { alert('Please enter a description and a valid amount.'); return; }
-    expenses.push({ desc, amount, currency, paidBy, cat, notes, id: String(Date.now()) });
-    localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
-    document.getElementById('exp-desc').value = '';
+
+    // 1. Insert the expense row; .select().single() returns the new row (including its generated UUID)
+    const { data: expRow, error: expErr } = await db
+      .from('expenses')
+      .insert({
+        description: desc,
+        amount,
+        currency:    currencyToDb(currency),
+        paid_by_id:  participantNameToId[paidBy],
+        category_id: categoryDisplayToId[cat],
+        notes:       notes || null
+      })
+      .select()
+      .single();
+
+    if (expErr) { alert('Failed to save expense: ' + expErr.message); return; }
+
+    // 2. Insert one split per participant — payer is already settled
+    const shareAmount = amount / 6;
+    const splits = Object.entries(participantNameToId).map(([name, id]) => ({
+      expense_id:     expRow.id,
+      participant_id: id,
+      share_amount:   shareAmount,
+      is_settled:     name === paidBy
+    }));
+    const { error: splitErr } = await db.from('expense_splits').insert(splits);
+    if (splitErr) console.error('Split insert failed:', splitErr.message);
+
+    document.getElementById('exp-desc').value   = '';
     document.getElementById('exp-amount').value = '';
-    document.getElementById('exp-notes').value = '';
-    renderExpenses();
+    document.getElementById('exp-notes').value  = '';
+    await loadExpenses();
   }
 
-  function deleteExpense(id) {
+  async function deleteExpense(id) {
     const exp = expenses.find(e => String(e.id) === String(id));
     if (!exp || exp.seeded) return;
-    expenses = expenses.filter(e => String(e.id) !== String(id));
-    localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
-    renderExpenses();
+    // Delete child splits first — FK constraint prevents deleting the parent first
+    await db.from('expense_splits').delete().eq('expense_id', id);
+    const { error } = await db.from('expenses').delete().eq('id', id);
+    if (error) { alert('Failed to delete: ' + error.message); return; }
+    await loadExpenses();
   }
 
   function editExpense(id) {
@@ -2377,18 +2436,29 @@
       </div>`;
   }
 
-  function saveExpenseEdit(id) {
+  async function saveExpenseEdit(id) {
     const exp = expenses.find(e => String(e.id) === String(id));
     if (!exp) return;
-    const desc = document.getElementById('edit-desc-' + id).value.trim();
-    const amount = parseFloat(document.getElementById('edit-amount-' + id).value);
+    const desc     = document.getElementById('edit-desc-' + id).value.trim();
+    const amount   = parseFloat(document.getElementById('edit-amount-' + id).value);
     const currency = document.getElementById('edit-currency-' + id).value;
-    const cat = document.getElementById('edit-cat-' + id).value;
-    const notes = document.getElementById('edit-notes-' + id).value.trim();
+    const cat      = document.getElementById('edit-cat-' + id).value;
+    const notes    = document.getElementById('edit-notes-' + id).value.trim();
     if (!desc || isNaN(amount) || amount <= 0) { alert('Please enter a valid description and amount.'); return; }
-    exp.desc = desc; exp.amount = amount; exp.currency = currency; exp.cat = cat; exp.notes = notes;
-    localStorage.setItem('japan2026_expenses', JSON.stringify(expenses));
-    renderExpenses();
+
+    const { error } = await db
+      .from('expenses')
+      .update({
+        description: desc,
+        amount,
+        currency:    currencyToDb(currency),
+        category_id: categoryDisplayToId[cat],
+        notes:       notes || null
+      })
+      .eq('id', id);
+
+    if (error) { alert('Failed to save: ' + error.message); return; }
+    await loadExpenses();
   }
 
   function fmtAmt(currency, amount) {
@@ -2484,9 +2554,8 @@
     });
   }
 
-  // Init
-  seedExpenses();
-  renderExpenses();
+  // Init — load lookups first, then expenses (order matters: dbRowToExpense needs the maps)
+  loadLookups().then(loadExpenses);
   loadChecklist();
 
   // Countdown Timer — target: 7 Nov 2026, 9:20AM Malaysia time (UTC+8)

@@ -16,6 +16,7 @@
 - Always use **Session Pooler** on free tier — direct connection resolves to IPv6 which times out on most networks without the paid IPv4 add-on
 - If password contains special characters (e.g. `&`), URL-encode them: `&` → `%26`
 - Free tier projects pause after ~1 week of inactivity — restore via dashboard before connecting
+- **Tables must be exposed in the Data API** — `Integrations → Data API → Exposed tables` — tables not listed there return `permission denied` even with RLS disabled. This affects the JS client (PostgREST), not direct psql connections.
 
 ## Final Objective
 Integrate Supabase as the database backend for the **Japan Trip Expense Tracker** — replacing any local/static data with live reads/writes from the cloud DB.
@@ -42,6 +43,17 @@ Integrate Supabase as the database backend for the **Japan Trip Expense Tracker*
 4. Window functions
 
 ## Planned Features
+
+### Realtime Sync (future)
+- Use Supabase Realtime to push live updates to all open tabs/devices without page refresh
+- Subscribe to `expenses` table changes: INSERT/UPDATE/DELETE trigger automatic UI re-render
+- Replaces the current "refresh to see others' changes" limitation
+
+### Auth & Per-User Ownership (future)
+- Add Supabase Auth (email + password or magic link) — no Supabase account needed for friends
+- Add `user_id` column to `expenses` (references `auth.users`)
+- Update RLS: SELECT = all authenticated, INSERT = all authenticated, UPDATE/DELETE = own rows only (`auth.uid() = user_id`)
+- Add login UI to `index.html`
 
 ### Expense Split Calculator
 When a user adds a new expense:
