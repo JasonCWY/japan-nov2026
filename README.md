@@ -10,6 +10,7 @@ japan-nov2026/
 │   ├── Nov Japan Itinerary v1.0.html   # Original itinerary document
 │   └── trip_knowledge_base.md          # Trip research and reference notes
 ├── index.html                          # Main dashboard / group trip tool (output)
+├── config.js                           # Supabase credentials — gitignored, NOT in repo (see below)
 ├── CLAUDE.md                           # AI coding instructions for this repo
 └── README.md                           # This file
 ```
@@ -30,11 +31,17 @@ japan-nov2026/
 
 ## Expense Tracker
 
-The **Group Expense Tracker** inside `index.html` stores data in your browser's `localStorage`. This means:
+The **Group Expense Tracker** is backed by **Supabase** (cloud database). All 6 group members see the same live data — adding or deleting an expense on one device is reflected for everyone.
 
-- Data is saved **per device/browser** — it is not synced across devices or people.
-- Each group member sees their own local copy of expenses.
-- Clearing browser data will erase recorded expenses.
+### config.js — Credentials committed, safe by design
+
+`config.js` holds the Supabase project URL and anon key. It is committed to the repo — this is intentional and safe because:
+
+- The anon key is a **publishable key** (`sb_publishable_`) designed to be client-facing
+- All tables are protected by **Row Level Security (RLS)** — the key alone grants no more access than the policies allow
+- RLS policies permit group members to read and write expenses, but cannot access internal Supabase infrastructure or other projects
+
+If you clone this repo, `config.js` is already included — no manual setup needed.
 
 ## Development Notes
 
