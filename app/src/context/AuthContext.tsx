@@ -10,7 +10,6 @@ export interface AuthContextValue {
   loading: boolean
   signIn: (name: string, pin: string) => Promise<{ error: string | null }>
   signOut: () => Promise<void>
-  changePin: (newPin: string) => Promise<{ error: string | null }>
 }
 
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -57,20 +56,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: buildTripEmail(name),
       password: pin,
     })
-    return { error: error ? 'Wrong name or PIN — try again.' : null }
+    return { error: error ? 'Couldn’t sign in — please try again.' : null }
   }
 
   async function signOut() {
     await supabase.auth.signOut()
   }
 
-  async function changePin(newPin: string) {
-    const { error } = await supabase.auth.updateUser({ password: newPin })
-    return { error: error ? error.message : null }
-  }
-
   return (
-    <AuthContext.Provider value={{ session, participant, loading, signIn, signOut, changePin }}>
+    <AuthContext.Provider value={{ session, participant, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )

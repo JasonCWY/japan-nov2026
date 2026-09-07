@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import type { TabId } from '../../types/domain'
 import { SECTIONS, accentText } from '../../config/sections'
 import { members } from '../../data/members'
 import { useAuth } from '../../hooks/useAuth'
 import { ThemeToggle } from './ThemeToggle'
-import { ChangePinModal } from './ChangePinModal'
 
 export function Drawer({
   open,
@@ -19,7 +17,6 @@ export function Drawer({
 }) {
   const { participant, signOut } = useAuth()
   const me = members.find((m) => m.name === participant?.name)
-  const [showChangePin, setShowChangePin] = useState(false)
 
   return (
     <>
@@ -73,16 +70,6 @@ export function Drawer({
               </button>
             )
           })}
-
-          <div className="my-2 border-t border-line" />
-          <button
-            type="button"
-            onClick={() => setShowChangePin(true)}
-            className="w-full flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-left text-ink-muted hover:bg-app-bg hover:text-ink transition-colors"
-          >
-            <span className="text-lg leading-none">🔑</span>
-            <span className="flex-1">Change PIN</span>
-          </button>
         </nav>
 
         {/* footer */}
@@ -97,8 +84,6 @@ export function Drawer({
           </button>
         </div>
       </aside>
-
-      <ChangePinModal open={showChangePin} onClose={() => setShowChangePin(false)} />
     </>
   )
 }
