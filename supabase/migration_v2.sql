@@ -113,3 +113,84 @@ alter publication supabase_realtime add table expenses, expense_splits, checklis
 -- Run this if you see "permission denied for table checklist_items".
 -- ============================================================================
 grant select, update on checklist_items to authenticated;
+
+-- ============================================================================
+-- PART 4 — partial payment tracking on expense splits
+-- Adds how much each person has actually paid toward their share, so the
+-- expense tracker can show partial progress (paid RM30 of RM60), not just
+-- a settled/unsettled boolean. Run in the SQL Editor.
+-- ============================================================================
+alter table expense_splits add column if not exists paid_amount numeric not null default 0;
+
+-- backfill: rows already marked settled are treated as fully paid
+update expense_splits set paid_amount = share_amount where is_settled = true and paid_amount = 0;
+
+-- ============================================================================
+-- PART 5 — restrict expense deletion to the payer (the person owed reimbursement)
+-- Replaces the "any authenticated user can delete" policies so only the person
+-- who paid for an expense can remove it (and its split rows). Run in SQL Editor.
+-- ============================================================================
+drop policy if exists "delete non-seeded expenses" on expenses;
+create policy "payer deletes own non-seeded expenses" on expenses for delete to authenticated
+using (
+  is_seeded = false
+  and paid_by_id = (select id from participants where auth_user_id = auth.uid())
+);
+
+drop policy if exists "delete splits" on expense_splits;
+create policy "payer deletes own expense splits" on expense_splits for delete to authenticated
+using (
+  exists (
+    select 1 from expenses e
+    join participants p on p.id = e.paid_by_id
+    where e.id = expense_splits.expense_id
+      and e.is_seeded = false
+      and p.auth_user_id = auth.uid()
+  )
+);
+
+-- ============================================================================
+-- PART 6 — fold hotel settlements into the expense list
+-- The Tokyo/Osaka hotels are seeded expenses; this aligns the seeded split
+-- paid-amounts with the real settlement state so the static hotel cards can be
+-- retired (the info now lives in the expense list + Settle Up). Already applied.
+-- ============================================================================
+update expense_splits set paid_amount = 283.58, is_settled = false
+  where expense_id = 'a0000000-0000-0000-0000-000000000001'
+    and participant_id = 'bc96af5c-ba2f-40df-9566-68e6c3aae8f0'; -- Kai Nin (Tokyo, 50%)
+update expense_splits set paid_amount = 300.00, is_settled = false
+  where expense_id = 'a0000000-0000-0000-0000-000000000001'
+    and participant_id = '5ff1c258-db21-4104-9b85-b669cbc218d8'; -- Sab2 (Tokyo, partial)
+
+-- ============================================================================
+-- PART 7 — threaded comments on checklist items
+-- A running list of comments (author + time) per checklist item, live-synced.
+-- Run in the SQL Editor.
+-- ============================================================================
+create table if not exists checklist_comments (
+  id             uuid primary key default gen_random_uuid(),
+  item_id        text not null references checklist_items(id) on delete cascade,
+  participant_id uuid references participants(id),
+  body           text not null,
+  created_at     timestamptz not null default now()
+);
+
+alter table checklist_comments enable row level security;
+grant select, insert, delete on checklist_comments to authenticated;
+
+create policy "read comments"   on checklist_comments for select to authenticated using (true);
+create policy "insert comments" on checklist_comments for insert to authenticated with check (true);
+create policy "delete own comments" on checklist_comments for delete to authenticated
+  using (participant_id = (select id from participants where auth_user_id = auth.uid()));
+
+alter publication supabase_realtime add table checklist_comments;
+
+-- ============================================================================
+-- PART 8 — let group members add / remove checklist items
+-- The checklist was read+update only; this allows inserting new to-do items
+-- and deleting them (comments cascade via the FK). Run in the SQL Editor.
+-- ============================================================================
+grant insert, delete on checklist_items to authenticated;
+
+create policy "insert checklist" on checklist_items for insert to authenticated with check (true);
+create policy "delete checklist" on checklist_items for delete to authenticated using (true);

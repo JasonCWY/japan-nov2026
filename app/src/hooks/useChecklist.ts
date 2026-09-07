@@ -57,5 +57,26 @@ export function useChecklist() {
     await load()
   }
 
-  return { items, loading, toggleItem }
+  async function addItem(priority: ChecklistPriority, label: string) {
+    const trimmed = label.trim()
+    if (!trimmed) return
+    const maxOrder = items.reduce((m, i) => Math.max(m, i.sortOrder), 0)
+    const { error } = await supabase.from('checklist_items').insert({
+      id: crypto.randomUUID(),
+      priority,
+      sort_order: maxOrder + 1,
+      label: trimmed,
+      is_done: false,
+    })
+    if (error) console.error('Add checklist item failed:', error.message)
+    await load()
+  }
+
+  async function removeItem(id: string) {
+    const { error } = await supabase.from('checklist_items').delete().eq('id', id)
+    if (error) console.error('Remove checklist item failed:', error.message)
+    await load()
+  }
+
+  return { items, loading, toggleItem, addItem, removeItem }
 }

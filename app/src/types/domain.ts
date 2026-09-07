@@ -14,6 +14,14 @@ export interface Category {
 
 export type Currency = 'RM' | 'JPY'
 
+export interface SplitShare {
+  participantId: string
+  participantName: string
+  shareAmount: number
+  paidAmount: number
+  isSettled: boolean
+}
+
 export interface Expense {
   id: string
   desc: string
@@ -23,6 +31,7 @@ export interface Expense {
   cat: string
   notes: string
   seeded: boolean
+  splits: SplitShare[]
 }
 
 export interface ExpenseSplit {
@@ -42,4 +51,13 @@ export interface ChecklistItem {
   isDone: boolean
   doneBy: string | null
   updatedAt: string
+}
+
+export interface ChecklistComment {
+  id: string
+  itemId: string
+  participantId: string | null
+  authorName: string
+  body: string
+  createdAt: string
 }

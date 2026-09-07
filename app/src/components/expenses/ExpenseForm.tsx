@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
 import type { Category, Currency, Participant } from '../../types/domain'
 import { categoryDisplay } from '../../lib/categoryDisplay'
+import { computeSplits, initialSplit, splitValidity, type SplitValue } from '../../lib/splits'
 import type { ExpenseInput } from '../../hooks/useExpenses'
 import { useAuth } from '../../hooks/useAuth'
+import { SplitEditor } from './SplitEditor'
 
 export function ExpenseForm({
   participants,
@@ -20,17 +22,24 @@ export function ExpenseForm({
   const [paidBy, setPaidBy] = useState(participant?.name ?? participants[0]?.name ?? '')
   const [cat, setCat] = useState(categories[0] ? categoryDisplay(categories[0]) : '')
   const [notes, setNotes] = useState('')
+  const [split, setSplit] = useState<SplitValue>(() => initialSplit(participants))
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
   const effectivePaidBy = paidBy || participant?.name || participants[0]?.name || ''
   const effectiveCat = cat || (categories[0] ? categoryDisplay(categories[0]) : '')
+  const parsedAmount = parseFloat(amount)
+  const total = isNaN(parsedAmount) ? 0 : parsedAmount
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    const parsedAmount = parseFloat(amount)
     if (!desc.trim() || isNaN(parsedAmount) || parsedAmount <= 0) {
       setError('Please enter a description and a valid amount.')
+      return
+    }
+    const validity = splitValidity(split, total)
+    if (!validity.valid) {
+      setError(validity.message ?? 'Please fix the split before saving.')
       return
     }
     setSubmitting(true)
@@ -42,6 +51,7 @@ export function ExpenseForm({
       paidBy: effectivePaidBy,
       cat: effectiveCat,
       notes: notes.trim(),
+      splits: computeSplits(split, total),
     })
     setSubmitting(false)
     if (error) {
@@ -51,6 +61,7 @@ export function ExpenseForm({
     setDesc('')
     setAmount('')
     setNotes('')
+    setSplit(initialSplit(participants))
   }
 
   const inputClass = 'w-full border border-line rounded-lg px-3 py-2 text-sm bg-card'
@@ -119,6 +130,8 @@ export function ExpenseForm({
           />
         </div>
       </div>
+
+      <SplitEditor participants={participants} total={total} currency={currency} value={split} onChange={setSplit} />
 
       {error && <p className="text-sm text-primary">{error}</p>}
 
