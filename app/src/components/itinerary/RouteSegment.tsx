@@ -3,7 +3,7 @@ import type { RouteSection } from '../../data/itinerary'
 export function RouteSegment({ section }: { section: RouteSection }) {
   return (
     <div className="mt-4">
-      <div className="text-sm font-bold text-secondary flex items-center flex-wrap gap-1">
+      <div className="text-sm font-bold text-secondary dark:text-white flex items-center flex-wrap gap-1">
         {section.heading}
         {section.badge && (
           <span

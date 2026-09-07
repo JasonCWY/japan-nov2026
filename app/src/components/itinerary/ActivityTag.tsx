@@ -6,7 +6,7 @@ const kindClasses: Record<ActivityTagKind, string> = {
   culture: 'bg-info/15 text-info',
   food: 'bg-warning/15 text-warning',
   shopping: 'bg-primary/15 text-primary',
-  transport: 'bg-secondary/10 text-secondary',
+  transport: 'bg-secondary/10 text-secondary dark:bg-white/10 dark:text-white/85',
 }
 
 export function ActivityTag({ kind, label }: { kind: ActivityTagKind; label: string }) {
